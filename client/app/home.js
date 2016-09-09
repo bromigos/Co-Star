@@ -250,6 +250,12 @@ angular.module('costars.home' , [])
 
   $scope.detailFrame = undefined;
 
+  $scope.watchTrailer = function(movieInfo){
+    $scope.showIFrame = true; // display iframe on trailer click
+    console.log("make tmdb request with this id: ", movieInfo.id);
+
+  }
+
   $scope.watchForFree = function(movieInfo){
     $scope.showIFrame = true; // display iframe on pirate click
     console.log("pirate source is: ", movieInfo.pirate_src);
