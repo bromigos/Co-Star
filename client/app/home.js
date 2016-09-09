@@ -250,24 +250,37 @@ angular.module('costars.home' , [])
 
   $scope.detailFrame = undefined;
 
+  $scope.watchTrailer = function(movieInfo){
+    $scope.showIFrame = true; // display iframe on trailer click
+    console.log("make tmdb request with this id: ", movieInfo.id);
+    ApiCalls.searchByID(movieInfo.id)
+    .then(function(resp){
+      // searchByID returns a promise which is resolved to the youtube key as resp
+      $scope.detailFrame = $sce.trustAsResourceUrl("https://www.youtube.com/embed/" + resp);
+    })
+    .catch(function(err){
+      console.log("Error: ", err);
+    });
+  };
+
   $scope.watchForFree = function(movieInfo){
     $scope.showIFrame = true; // display iframe on pirate click
     console.log("pirate source is: ", movieInfo.pirate_src);
     $scope.detailFrame = $sce.trustAsResourceUrl(movieInfo.pirate_src);
     // window.open("http://putlocker.is/watch-" + movie.split(' ').join('-').split(':').join('').split('&').join('and') + "-online-free-putlocker.html", '_blank');
-  }
+  };
 
   $scope.watchOnNetflix = function(movieInfo){
     var id = movieInfo.external_id
     window.open("http://www.netflix.com/watch/" + id);
-  }
+  };
 
   $scope.watchOnAmazon = function(movieInfo){
     var movie = movieInfo.original_title
     console.log("Link clicked to watch " + movie + " on Amazon.")
     // The following line needs to be changed to work with amazon maybe???
     // window.open("http://www.netflix.com/search/" + movie.split(' ').join('-'));
-  }
+  };
 
   $scope.startGame = function(){
     $scope.playing = !$scope.playing;
